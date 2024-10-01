@@ -25,7 +25,7 @@ export class TextObject extends DrawnObjectBase {
     get text() { return this._text; }
     set text(v) {
         //=== YOUR CODE HERE ===
-        // this._text = v;
+        this._text = v;
     }
     get font() { return this._font; }
     set font(v) {

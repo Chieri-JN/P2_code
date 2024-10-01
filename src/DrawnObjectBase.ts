@@ -693,8 +693,10 @@ export class DrawnObjectBase {
     // our parent.
     public damageArea(xv: number, yv : number, wv : number, hv : number) : void {
         //=== YOUR CODE HERE ===
-
-        
+        // Pass up damage through tree i.e give damage to parent
+        if (this.parent){ // Safety Check!
+        this.parent._damageFromChild(this, xv, yv, wv, hv);
+        }
 
     }
 
@@ -720,6 +722,23 @@ export class DrawnObjectBase {
                                wv : number, hv: number) : void 
     {
             //=== YOUR CODE HERE ===
+            // Convert child coords to parent coord system,
+            // want to add child position relative to parent to coords
+            // from child perspective
+            let parentx = child.x + xInChildCoords;
+            let parenty = child.y + yInChildCoords;
+
+            // keep damaged area within parent bounds (i.e if damaged aread extends)
+            // past bounds
+            let xDam = (parentx < 0) ? 0 : parentx;
+            let yDam = (parenty < 0) ? 0 : parenty;
+            let wDam = (wv < (this.w - xDam)) ? wv : this.w - xDam;
+            let hDam = (hv < (this.h - yDam)) ? hv : this.h - yDam;
+     
+            if (wDam > 0 && hDam > 0){
+                // pass it up
+                this.damageArea(xDam, yDam, wDam, hDam);
+            }
     }
 
     //. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .

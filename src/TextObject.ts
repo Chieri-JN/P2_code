@@ -36,7 +36,7 @@ export class TextObject extends DrawnObjectBase {
     public get text() {return this._text;}
     public set text(v : string) {
         //=== YOUR CODE HERE ===
-        // this._text = v;
+        this._text = v;
     }
 
     //. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .

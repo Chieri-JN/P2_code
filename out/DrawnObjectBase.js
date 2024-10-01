@@ -427,7 +427,7 @@ export class DrawnObjectBase {
         // clip 
         this.applyClip(ctx, 0, 0, child.w, child.h);
         // bewoop
-        console.log("CHEESe");
+        console.log("child");
     }
     //. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
     // Internal method to restore the given drawing context after drawing the 
@@ -541,6 +541,10 @@ export class DrawnObjectBase {
     // our parent.
     damageArea(xv, yv, wv, hv) {
         //=== YOUR CODE HERE ===
+        // Pass up damage through tree i.e give damage to parent
+        if (this.parent) { // Safety Check!
+            this.parent._damageFromChild(this, xv, yv, wv, hv);
+        }
     }
     //. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
     // Declare that the entire bounding box has been damaged.  This is the typical 
@@ -558,6 +562,21 @@ export class DrawnObjectBase {
     // limited to our bounds by clipping.
     _damageFromChild(child, xInChildCoords, yInChildCoords, wv, hv) {
         //=== YOUR CODE HERE ===
+        // Convert child coords to parent coord system,
+        // want to add child position relative to parent to coords
+        // from child perspective
+        let parentx = child.x + xInChildCoords;
+        let parenty = child.y + yInChildCoords;
+        // keep damaged area within parent bounds (i.e if damaged aread extends)
+        // past bounds
+        let xDam = (parentx < 0) ? 0 : parentx;
+        let yDam = (parenty < 0) ? 0 : parenty;
+        let wDam = (wv < (this.w - xDam)) ? wv : this.w - xDam;
+        let hDam = (hv < (this.h - yDam)) ? hv : this.h - yDam;
+        if (wDam > 0 && hDam > 0) {
+            // pass it up
+            this.damageArea(xDam, yDam, wDam, hDam);
+        }
     }
     get debugID() { return this._debugID; }
     static _genDebugID() { return DrawnObjectBase._nextDebugID++; }
