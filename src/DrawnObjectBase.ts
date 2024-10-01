@@ -11,12 +11,18 @@
 // class along with a number of subclasses.
 //
 // This class provides implementtion or partial implementation in six categories:
+
 //   * Constructor, properties, and property accessors.  
+
 //   * A child list and parent "back pointer" to implement the tree establishing 
 //     drawing hierarchy; along with methods for adding and removing children.
+
 //   * Methods for hierachical drawing.
+
 //   * Methods implementing layout (size and positioning) for objects.
+
 //   * Methods for tracking damage (areas which need to be redrawn)
+
 //   * Some debugging aids which e.g., provide human-readable strings useful for
 //     displaying objects in textual debugging output.
 // 
@@ -107,12 +113,15 @@ export class DrawnObjectBase {
     protected _x : number = 0;
     public get x() : number {return this._x;}  
     public set x(v : number) {
-        if (v !== this.x) {
+        if (!(v === this._x)) {
 
              // don't forget to declare damage whenever something changes
              // that could affect the display
 
             //=== YOUR CODE HERE ===
+            this._x = v
+            this.damageAll();
+
         }
     }    
     //. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -122,6 +131,10 @@ export class DrawnObjectBase {
     public get y() : number {return this._y;}
     public set y(v : number) {
         //=== YOUR CODE HERE ===
+        if (! (v === this._y)){
+            this._y = v;
+            this.damageAll()
+        }
         
     }
 
@@ -156,7 +169,8 @@ export class DrawnObjectBase {
     public get wConfig() : SizeConfigLiteral {return this._wConfig;}
     public set wConfig(v : SizeConfigLiteral) {
         //=== YOUR CODE HERE ===
-        if ( ! (v === this._wConfig)){
+        if (! (v === this._wConfig)){
+            // this._wConfig = v; 
             this.damageAll();
         }
     }
@@ -200,6 +214,7 @@ export class DrawnObjectBase {
         //=== YOUR CODE HERE ===
 
         if ( ! (v === this._hConfig)){
+            this._hConfig = v;
             this.damageAll();
         }
        
@@ -236,6 +251,12 @@ export class DrawnObjectBase {
     public get visible() : boolean {return this._visible;}
     public set visible(v : boolean) {
             //=== YOUR CODE HERE ===
+
+            if (!(v === this._visible))
+            {
+                this._visible = v;
+                this.damageAll();
+            }
     }
 
     //-------------------------------------------------------------------
@@ -802,6 +823,9 @@ export class DrawnObjectBase {
 
     // Produce a debugging display of the tree rooted at this object on the console log.
     public dumpTree() : void {console.log(this.treeString());}
+
+    // GET RID OF LATTER
+    // public dumpTree() : void {console.log("weee");}
 
 }  // end of class DrawnObjectBase
 

@@ -12,7 +12,9 @@ import { DrawnObjectBase } from "./DrawnObjectBase.js";
 // Note: We are not processing input using a normal input/damage/redraw cycle in this
 // project.  Therefore, this class provides some extra methods to deal with that.
 // Specifically, to cause layout and drawing after a change, the method 
+
 // layoutAndDrawAll() should be called explicitly after a batch of damage has occured.
+
 // There are also special methods in this class to respond when asynchronous image
 // loading completes -- these cause a call to layoutAndDamage() in order to make 
 // those images appear correctly.

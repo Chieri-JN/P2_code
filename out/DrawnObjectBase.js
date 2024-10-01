@@ -11,58 +11,6 @@
 // class along with a number of subclasses.
 //
 // This class provides implementtion or partial implementation in six categories:
-//   * Constructor, properties, and property accessors.  
-//   * A child list and parent "back pointer" to implement the tree establishing 
-//     drawing hierarchy; along with methods for adding and removing children.
-//   * Methods for hierachical drawing.
-//   * Methods implementing layout (size and positioning) for objects.
-//   * Methods for tracking damage (areas which need to be redrawn)
-//   * Some debugging aids which e.g., provide human-readable strings useful for
-//     displaying objects in textual debugging output.
-// 
-// PROPERTIES
-// Key properties include those that determine the current size and position of the 
-// object (x,y, w,h); size configuration information that determine the sizing 
-// capabilities of this object (minimum, natural, and maximum width and hieght: 
-// wConfig, hConfig); and whether the object is currently visible (visible).  All 
-// properties use protected storage (declared in "_name" form), along with get and/or
-// set accessors (declared with a "plain" name), and in some cases additional accessors
-// which break out parts of a value or set related values together.
-//
-// DRAWING
-// Objects are drawn using a hierarchical coordinate system.  Each object is placed
-// at some x,y position within it's parent's coordinate system, then esstablishes it's
-// own local coordinate system with it's top-left forming the origin (with the y-axis
-// pointing down on the screen).  Each object also maintains a width and height, which 
-// along with its position establishes a bounding box of the object.  All drawing output
-// for the object and all of its children are clipped to that bounding box.  
-//
-// LAYOUT
-// Layout is done in a two-pass fashion -- first bottom up to determine available size
-// ranges, then a top down pass establishing final size and position of each objects.
-// Objects use width and hieght configuration objects (wConfig, hConfig) to express the
-// set of sizes they are capable of taking on.  Each of the configurations expresses a 
-// minimum, natural, or desired, and maximum size for the object.  For simple objects,
-// these values are typically determined by the contents of the object.  For example,
-// a TextObject has a fixed size (min=natural=max) which is determined by the text it 
-// draws (along with its font, etc.). Layout containers will use the size configuration 
-// information of their children to determine their own size configuration, and will in 
-// the second pass of the layout implementation estabish the actual size and position 
-// of each of their children.  
-//
-// DAMAGE MANAGEMENT
-// Each time something about an object changes in a way that should be reflected by a 
-// visual image for the object, it must declare "damage" indicating what part of its 
-// display may need to be udpated (by calling damageArea()) or that it's full display 
-// might need to be updated (by calling damageAll()).  Note that it is safe to 
-// declare more damaged area that could actually change, so it is allways safe to
-// call damageAll() (and most code defaults to doing that rather than working out 
-// the exact area of damage).
-//
-// History of major versions
-//  V1.0a   Initial version   Scott Hudson 9/23
-//
-//===================================================================
 import { SizeConfig } from "./SizeConfig.js";
 // used here to get a drawing context to measure text with
 export class DrawnObjectBase {
@@ -134,10 +82,11 @@ export class DrawnObjectBase {
     }
     get x() { return this._x; }
     set x(v) {
-        if (v !== this.x) {
+        if (!(v === this._x)) {
             // don't forget to declare damage whenever something changes
             // that could affect the display
             //=== YOUR CODE HERE ===
+            this._x = v;
         }
     }
     get y() { return this._y; }
@@ -155,6 +104,10 @@ export class DrawnObjectBase {
     get w() { return this._w; }
     set w(v) {
         //=== YOUR CODE HERE ===
+        if (!(this._w === v)) {
+            this._w = v;
+            this.damageAll();
+        }
     }
     get wConfig() { return this._wConfig; }
     set wConfig(v) {
@@ -180,6 +133,10 @@ export class DrawnObjectBase {
     get h() { return this._h; }
     set h(v) {
         //=== YOUR CODE HERE ===
+        if (!(this._h === v)) {
+            this._h = v;
+            this.damageAll();
+        }
     }
     get hConfig() { return this._hConfig; }
     set hConfig(v) {
