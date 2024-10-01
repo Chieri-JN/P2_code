@@ -170,7 +170,7 @@ export class DrawnObjectBase {
     public set wConfig(v : SizeConfigLiteral) {
         //=== YOUR CODE HERE ===
         if (! (v === this._wConfig)){
-            // this._wConfig = v; 
+            this._wConfig = v; 
             this.damageAll();
         }
     }
@@ -497,7 +497,7 @@ export class DrawnObjectBase {
         ctx.lineTo(0,this.h);  ctx.lineTo(0,0);
 
         // close path?
-        ctx.closePath();
+        // ctx.closePath();
     }
 
     //. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -555,7 +555,7 @@ export class DrawnObjectBase {
         ctx.save();
 
         //=== YOUR CODE HERE ===
-        const child = this.children[childIndx]
+        let child = this.children[childIndx]
        
         // translate the child
         ctx.translate(child.x, child.y)
@@ -565,7 +565,7 @@ export class DrawnObjectBase {
         
 
         // bewoop
-        console.log("child")
+        // console.log("child")
     }
 
     

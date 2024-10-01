@@ -11,8 +11,8 @@ import { DrawnObjectBase } from "./DrawnObjectBase.js";
 //
 // Note: We are not processing input using a normal input/damage/redraw cycle in this
 // project.  Therefore, this class provides some extra methods to deal with that.
-// Specifically, to cause layout and drawing after a change, the method 
 
+// Specifically, to cause layout and drawing after a change, the method 
 // layoutAndDrawAll() should be called explicitly after a batch of damage has occured.
 
 // There are also special methods in this class to respond when asynchronous image
@@ -100,9 +100,8 @@ export class TopObject extends DrawnObjectBase {
     // For this object we clear the canvas behind the children that we draw
     protected override _drawSelfOnly(ctx: CanvasRenderingContext2D): void {
         //=== YOUR CODE HERE ===
-        
         ctx.clearRect(this.x, this.y, this.w, this.h);
-        // this.draw(this.canvasContext)
+        // this.draw(this.canvasContext) 
     }
 
     //. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -123,7 +122,7 @@ export class TopObject extends DrawnObjectBase {
     public layoutAndDrawAll() : void {
         // only do something if we have been damaged since the last redraw
         if (this.damaged) {
-
+ 
             // save the async damage setting so we can restore it
             const saveAsyncSetting = this.allowAsyncDamageRedraw;
             
@@ -159,15 +158,15 @@ export class TopObject extends DrawnObjectBase {
                 // we don't have a parent to do the following for us, so we do it 
                 // ourselves...
 
-                // clip to our bounds
-                
+                // clip to our bounds 
                 //=== YOUR CODE HERE ===
-
+                this.applyClip(this.canvasContext, this._x, this._y, this._w, this._h);
+                
+                
                 // within our bounds clip to just the damaged region
-                
                 //=== YOUR CODE HERE ===
-
-                this.applyClip(this.canvasContext, this._damageRectX, this._damageRectY, this._damageRectW, this._damageRectH)
+                this.applyClip(this.canvasContext, this._damageRectX, this._damageRectY, this._damageRectW, this._damageRectH);
+                
                 // after this we will no longer be damaged, so reset our damage tracking
                 // rectangle to be our whole bounds
                 this._damageRectX = this._damageRectY = 0;
@@ -175,8 +174,9 @@ export class TopObject extends DrawnObjectBase {
                 this._damageRectH = this.h;
 
                 // do the actual drawing from here down the tree
-                
                 //=== YOUR CODE HERE ===
+                this.draw(this.canvasContext);
+                
 
             } catch(err) {
                 // catch any exception thrown and echo the message, but then 
@@ -209,12 +209,11 @@ export class TopObject extends DrawnObjectBase {
     // damage instead of passing it up the tree (since there is no up  from here).
     public override damageArea(xv: number, yv: number, wv: number, hv: number): void {
         //=== YOUR CODE HERE ===
-        // this._damageRectX = xv
-        // this._damageRectY = yv
-        // this._damageRectW = wv
-        // this._damageRectH = hv
-
-        // this._damaged = true;
+        this._damageRectX = xv
+        this._damageRectY = yv
+        this._damageRectW = wv
+        this._damageRectH = hv
+        this._damaged = true;
     }
     
     //. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  

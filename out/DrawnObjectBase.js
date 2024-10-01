@@ -118,7 +118,7 @@ export class DrawnObjectBase {
     set wConfig(v) {
         //=== YOUR CODE HERE ===
         if (!(v === this._wConfig)) {
-            // this._wConfig = v; 
+            this._wConfig = v;
             this.damageAll();
         }
     }
@@ -371,7 +371,7 @@ export class DrawnObjectBase {
         ctx.lineTo(0, this.h);
         ctx.lineTo(0, 0);
         // close path?
-        ctx.closePath();
+        // ctx.closePath();
     }
     //. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
     // This method should (if this object is marked as visible) draw the display for this 
@@ -421,13 +421,13 @@ export class DrawnObjectBase {
         // save the state of the context object on its internal stack
         ctx.save();
         //=== YOUR CODE HERE ===
-        const child = this.children[childIndx];
+        let child = this.children[childIndx];
         // translate the child
         ctx.translate(child.x, child.y);
         // clip 
         this.applyClip(ctx, 0, 0, child.w, child.h);
         // bewoop
-        console.log("child");
+        // console.log("child")
     }
     //. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
     // Internal method to restore the given drawing context after drawing the 

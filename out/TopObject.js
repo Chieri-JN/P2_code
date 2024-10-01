@@ -71,7 +71,7 @@ export class TopObject extends DrawnObjectBase {
     _drawSelfOnly(ctx) {
         //=== YOUR CODE HERE ===
         ctx.clearRect(this.x, this.y, this.w, this.h);
-        // this.draw(this.canvasContext)
+        // this.draw(this.canvasContext) 
     }
     //. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
     // Override the _findTop() method so to returns this object as the top we have been
@@ -117,8 +117,9 @@ export class TopObject extends DrawnObjectBase {
             try {
                 // we don't have a parent to do the following for us, so we do it 
                 // ourselves...
-                // clip to our bounds
+                // clip to our bounds 
                 //=== YOUR CODE HERE ===
+                this.applyClip(this.canvasContext, this._x, this._y, this._w, this._h);
                 // within our bounds clip to just the damaged region
                 //=== YOUR CODE HERE ===
                 this.applyClip(this.canvasContext, this._damageRectX, this._damageRectY, this._damageRectW, this._damageRectH);
@@ -129,6 +130,7 @@ export class TopObject extends DrawnObjectBase {
                 this._damageRectH = this.h;
                 // do the actual drawing from here down the tree
                 //=== YOUR CODE HERE ===
+                this.draw(this.canvasContext);
             }
             catch (err) {
                 // catch any exception thrown and echo the message, but then 
@@ -158,11 +160,11 @@ export class TopObject extends DrawnObjectBase {
     // damage instead of passing it up the tree (since there is no up  from here).
     damageArea(xv, yv, wv, hv) {
         //=== YOUR CODE HERE ===
-        // this._damageRectX = xv
-        // this._damageRectY = yv
-        // this._damageRectW = wv
-        // this._damageRectH = hv
-        // this._damaged = true;
+        this._damageRectX = xv;
+        this._damageRectY = yv;
+        this._damageRectW = wv;
+        this._damageRectH = hv;
+        this._damaged = true;
     }
     //. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  
     // Special routine to declare that damage has occured due to asynchronous
