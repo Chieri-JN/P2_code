@@ -87,11 +87,16 @@ export class DrawnObjectBase {
             // that could affect the display
             //=== YOUR CODE HERE ===
             this._x = v;
+            this.damageAll();
         }
     }
     get y() { return this._y; }
     set y(v) {
         //=== YOUR CODE HERE ===
+        if (!(v === this._y)) {
+            this._y = v;
+            this.damageAll();
+        }
     }
     //. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
     // x,y position of this object in parent coordinates 
@@ -113,6 +118,7 @@ export class DrawnObjectBase {
     set wConfig(v) {
         //=== YOUR CODE HERE ===
         if (!(v === this._wConfig)) {
+            // this._wConfig = v; 
             this.damageAll();
         }
     }
@@ -142,6 +148,7 @@ export class DrawnObjectBase {
     set hConfig(v) {
         //=== YOUR CODE HERE ===
         if (!(v === this._hConfig)) {
+            this._hConfig = v;
             this.damageAll();
         }
     }
@@ -168,6 +175,10 @@ export class DrawnObjectBase {
     get visible() { return this._visible; }
     set visible(v) {
         //=== YOUR CODE HERE ===
+        if (!(v === this._visible)) {
+            this._visible = v;
+            this.damageAll();
+        }
     }
     get parent() { return this._parent; }
     // Find the root display object at the top of the tree this object is installed in.
@@ -359,6 +370,8 @@ export class DrawnObjectBase {
         ctx.lineTo(this.w, this.h);
         ctx.lineTo(0, this.h);
         ctx.lineTo(0, 0);
+        // close path?
+        ctx.closePath();
     }
     //. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
     // This method should (if this object is marked as visible) draw the display for this 
@@ -414,7 +427,7 @@ export class DrawnObjectBase {
         // clip 
         this.applyClip(ctx, 0, 0, child.w, child.h);
         // bewoop
-        console.log(child);
+        console.log("CHEESe");
     }
     //. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
     // Internal method to restore the given drawing context after drawing the 

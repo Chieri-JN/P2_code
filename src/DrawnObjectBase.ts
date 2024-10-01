@@ -495,6 +495,9 @@ export class DrawnObjectBase {
         ctx.moveTo(0,0); 
         ctx.lineTo(this.w, 0); ctx.lineTo(this.w,this.h);
         ctx.lineTo(0,this.h);  ctx.lineTo(0,0);
+
+        // close path?
+        ctx.closePath();
     }
 
     //. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -562,7 +565,7 @@ export class DrawnObjectBase {
         
 
         // bewoop
-        console.log(child)
+        console.log("child")
     }
 
     
@@ -690,6 +693,8 @@ export class DrawnObjectBase {
     // our parent.
     public damageArea(xv: number, yv : number, wv : number, hv : number) : void {
         //=== YOUR CODE HERE ===
+
+        
 
     }
 
