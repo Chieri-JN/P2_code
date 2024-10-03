@@ -169,7 +169,8 @@ export class DrawnObjectBase {
     public get wConfig() : SizeConfigLiteral {return this._wConfig;}
     public set wConfig(v : SizeConfigLiteral) {
         //=== YOUR CODE HERE ===
-        if (! (v === this._wConfig)){
+        // if (! (v === this._wConfig)){
+        if (!(SizeConfig.eq(this._wConfig, v))){
             this._wConfig = v; 
             this.damageAll();
         }
@@ -213,7 +214,8 @@ export class DrawnObjectBase {
     public set hConfig(v : SizeConfigLiteral) {
         //=== YOUR CODE HERE ===
 
-        if ( ! (v === this._hConfig)){
+        // if ( ! (v === this._hConfig)){
+        if (!(SizeConfig.eq(this._hConfig, v))){
             this._hConfig = v;
             this.damageAll();
         }
@@ -565,7 +567,7 @@ export class DrawnObjectBase {
         
 
         // bewoop
-        // console.log("child")
+        console.log("child")
     }
 
     

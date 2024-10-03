@@ -117,7 +117,8 @@ export class DrawnObjectBase {
     get wConfig() { return this._wConfig; }
     set wConfig(v) {
         //=== YOUR CODE HERE ===
-        if (!(v === this._wConfig)) {
+        // if (! (v === this._wConfig)){
+        if (!(SizeConfig.eq(this._wConfig, v))) {
             this._wConfig = v;
             this.damageAll();
         }
@@ -147,7 +148,8 @@ export class DrawnObjectBase {
     get hConfig() { return this._hConfig; }
     set hConfig(v) {
         //=== YOUR CODE HERE ===
-        if (!(v === this._hConfig)) {
+        // if ( ! (v === this._hConfig)){
+        if (!(SizeConfig.eq(this._hConfig, v))) {
             this._hConfig = v;
             this.damageAll();
         }
@@ -427,7 +429,7 @@ export class DrawnObjectBase {
         // clip 
         this.applyClip(ctx, 0, 0, child.w, child.h);
         // bewoop
-        // console.log("child")
+        console.log("child");
     }
     //. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
     // Internal method to restore the given drawing context after drawing the 

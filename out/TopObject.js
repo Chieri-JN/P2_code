@@ -70,8 +70,7 @@ export class TopObject extends DrawnObjectBase {
     // For this object we clear the canvas behind the children that we draw
     _drawSelfOnly(ctx) {
         //=== YOUR CODE HERE ===
-        ctx.clearRect(this.x, this.y, this.w, this.h);
-        // this.draw(this.canvasContext) 
+        ctx.clearRect(0, 0, this.w, this.h);
     }
     //. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
     // Override the _findTop() method so to returns this object as the top we have been
@@ -122,7 +121,18 @@ export class TopObject extends DrawnObjectBase {
                 this.applyClip(this.canvasContext, this._x, this._y, this._w, this._h);
                 // within our bounds clip to just the damaged region
                 //=== YOUR CODE HERE ===
-                this.applyClip(this.canvasContext, this._damageRectX, this._damageRectY, this._damageRectW, this._damageRectH);
+                // This is weird.
+                // this.applyClip(this.canvasContext, this._damageRectX, this._damageRectY, this._damageRectW, this._damageRectH);
+                // Within our bounds, intersect with the damaged region
+                if (this._damaged) {
+                    const x = Math.max(this._x, this._damageRectX);
+                    const y = Math.max(this._y, this._damageRectY);
+                    const w = Math.min(this._x + this._w, this._damageRectX + this._damageRectW) - x;
+                    const h = Math.min(this._y + this._h, this._damageRectY + this._damageRectH) - y;
+                    if (w > 0 && h > 0) {
+                        this.applyClip(this.canvasContext, x, y, w, h);
+                    }
+                }
                 // after this we will no longer be damaged, so reset our damage tracking
                 // rectangle to be our whole bounds
                 this._damageRectX = this._damageRectY = 0;
@@ -165,6 +175,7 @@ export class TopObject extends DrawnObjectBase {
         this._damageRectW = wv;
         this._damageRectH = hv;
         this._damaged = true;
+        // console.log("SEND EHLP");
     }
     //. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  
     // Special routine to declare that damage has occured due to asynchronous
