@@ -69,12 +69,14 @@ export class TextObject extends DrawnObjectBase {
     public get font() {return this._font;}
     public set font(v : string) {
         //=== YOUR CODE HERE ===
-        if (!(v=== this._font)){
+        
+        if (!(v === this._font)){
             this._font = v;
+            // this,
         }
     }  
 
-    
+
     
     //. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
@@ -85,7 +87,12 @@ export class TextObject extends DrawnObjectBase {
     public get padding() : SizeLiteral {return this._padding;}
     public set padding(v : SizeLiteral | number) {
         if (typeof v === 'number') v = {w:v, h:v};
-        //=== YOUR CODE HERE ===
+        if (! (v === this._padding))
+        {
+            this._padding.w = v.w;
+            this._padding.h = v.h;
+        }
+
     }
     
     //. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -113,15 +120,13 @@ export class TextObject extends DrawnObjectBase {
     // Recalculate the size of this object based on the size of the text
     protected _recalcSize(ctx? : DrawContext) : void {
         //=== YOUR CODE HERE ===
-        // let size = this._measureText(this.text, this.font, ctx);
+        let size = this._measureText(this.text, this.font, ctx);        
+        this.size  = {w : size.w, h : size.h}
 
         
-        // this.size  = {w : size.w, h : size.h}
-
-
         // // set the size configuration to be fixed at that size
-        // this.wConfig = SizeConfig.fixed(this.w);
-        // this.hConfig = SizeConfig.fixed(this.h);
+        this.wConfig = SizeConfig.fixed(this.w);
+        this.hConfig = SizeConfig.fixed(this.h);
     }
     
     //. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -146,18 +151,19 @@ export class TextObject extends DrawnObjectBase {
             
             //=== YOUR CODE HERE ===
 
-            // let measure = this._measureText(this.text, this.font, ctx);
-            // if (this.renderType === 'fill' )
-            // { 
-            //     ctx.fillStyle = clr;
-            //     ctx.fillText(this.text, this.padding.w, measure.baseln + this.padding.h);
+            let measure = this._measureText(this.text, this.font, ctx);
+
+            if (this.renderType === 'fill' )
+            { 
+                ctx.fillStyle = clr;
+                ctx.fillText(this.text, this.padding.w, measure.baseln + this.padding.h);
             
-            // }
-            // else
-            // {
-            //     ctx.strokeStyle = clr;
-            //     ctx.strokeText(this.text, this.padding.w, measure.baseln + this.padding.h);
-            // }
+            }
+            else
+            {
+                ctx.strokeStyle = clr;
+                ctx.strokeText(this.text, this.padding.w, measure.baseln + this.padding.h);
+            }
            
 
         }   finally {

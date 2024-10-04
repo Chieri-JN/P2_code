@@ -168,6 +168,8 @@ export class Row extends Group {
     // the space at the right of the row as a fallback strategy).
     protected _expandChildSprings(excess : number, numSprings : number) : void {
         //=== YOUR CODE HERE ===
+
+        // should not be += just =
     }
 
     //. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .

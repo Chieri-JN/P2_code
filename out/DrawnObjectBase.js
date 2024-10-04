@@ -109,6 +109,7 @@ export class DrawnObjectBase {
     get w() { return this._w; }
     set w(v) {
         //=== YOUR CODE HERE ===
+        v = SizeConfig.withinConfig(v, this.wConfig);
         if (!(this._w === v)) {
             this._w = v;
             this.damageAll();
@@ -140,6 +141,7 @@ export class DrawnObjectBase {
     get h() { return this._h; }
     set h(v) {
         //=== YOUR CODE HERE ===
+        v = SizeConfig.withinConfig(v, this.hConfig);
         if (!(this._h === v)) {
             this._h = v;
             this.damageAll();
@@ -149,6 +151,7 @@ export class DrawnObjectBase {
     set hConfig(v) {
         //=== YOUR CODE HERE ===
         // if ( ! (v === this._hConfig)){
+        // const newW = SizeConfig.withinConfig(v, this.wConfig);
         if (!(SizeConfig.eq(this._hConfig, v))) {
             this._hConfig = v;
             this.damageAll();
@@ -373,7 +376,7 @@ export class DrawnObjectBase {
         ctx.lineTo(0, this.h);
         ctx.lineTo(0, 0);
         // close path?
-        // ctx.closePath();
+        ctx.closePath();
     }
     //. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
     // This method should (if this object is marked as visible) draw the display for this 
@@ -429,7 +432,7 @@ export class DrawnObjectBase {
         // clip 
         this.applyClip(ctx, 0, 0, child.w, child.h);
         // bewoop
-        console.log("child");
+        console.log(child);
     }
     //. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
     // Internal method to restore the given drawing context after drawing the 

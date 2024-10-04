@@ -154,6 +154,7 @@ export class DrawnObjectBase {
     public get w() : number {return this._w;}
     public set w(v : number) {
             //=== YOUR CODE HERE ===
+            v = SizeConfig.withinConfig(v, this.wConfig)
             if (!(this._w === v))
             {
                 this._w = v;
@@ -199,6 +200,8 @@ export class DrawnObjectBase {
     public get h() : number {return this._h;}
     public set h(v : number) {
         //=== YOUR CODE HERE ===
+        v = SizeConfig.withinConfig(v, this.hConfig)
+        
         if (!(this._h === v))
             {
                 this._h = v;
@@ -215,6 +218,7 @@ export class DrawnObjectBase {
         //=== YOUR CODE HERE ===
 
         // if ( ! (v === this._hConfig)){
+            // const newW = SizeConfig.withinConfig(v, this.wConfig);
         if (!(SizeConfig.eq(this._hConfig, v))){
             this._hConfig = v;
             this.damageAll();
@@ -499,7 +503,7 @@ export class DrawnObjectBase {
         ctx.lineTo(0,this.h);  ctx.lineTo(0,0);
 
         // close path?
-        // ctx.closePath();
+        ctx.closePath();
     }
 
     //. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -567,7 +571,7 @@ export class DrawnObjectBase {
         
 
         // bewoop
-        console.log("child")
+        console.log(child);
     }
 
     

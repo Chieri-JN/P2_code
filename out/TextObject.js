@@ -1,4 +1,5 @@
 import { DrawnObjectBase } from "./DrawnObjectBase.js";
+import { SizeConfig } from "./SizeConfig.js";
 //===================================================================
 // Object that displays a single text string on one line
 //===================================================================
@@ -29,12 +30,19 @@ export class TextObject extends DrawnObjectBase {
     get font() { return this._font; }
     set font(v) {
         //=== YOUR CODE HERE ===
+        if (!(v === this._font)) {
+            this._font = v;
+            // this,
+        }
     }
     get padding() { return this._padding; }
     set padding(v) {
         if (typeof v === 'number')
             v = { w: v, h: v };
-        //=== YOUR CODE HERE ===
+        if (!(v === this._padding)) {
+            this._padding.w = v.w;
+            this._padding.h = v.h;
+        }
     }
     get renderType() { return this._renderType; }
     set rederType(v) { this._renderType = v; }
@@ -46,11 +54,11 @@ export class TextObject extends DrawnObjectBase {
     // Recalculate the size of this object based on the size of the text
     _recalcSize(ctx) {
         //=== YOUR CODE HERE ===
-        // let size = this._measureText(this.text, this.font, ctx);
-        // this.size  = {w : size.w, h : size.h}
+        let size = this._measureText(this.text, this.font, ctx);
+        this.size = { w: size.w, h: size.h };
         // // set the size configuration to be fixed at that size
-        // this.wConfig = SizeConfig.fixed(this.w);
-        // this.hConfig = SizeConfig.fixed(this.h);
+        this.wConfig = SizeConfig.fixed(this.w);
+        this.hConfig = SizeConfig.fixed(this.h);
     }
     //. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
     // Method to draw this object.  Note that we are only handling left-to-right
@@ -71,17 +79,15 @@ export class TextObject extends DrawnObjectBase {
                 clr = this.color.toString();
             }
             //=== YOUR CODE HERE ===
-            // let measure = this._measureText(this.text, this.font, ctx);
-            // if (this.renderType === 'fill' )
-            // { 
-            //     ctx.fillStyle = clr;
-            //     ctx.fillText(this.text, this.padding.w, measure.baseln + this.padding.h);
-            // }
-            // else
-            // {
-            //     ctx.strokeStyle = clr;
-            //     ctx.strokeText(this.text, this.padding.w, measure.baseln + this.padding.h);
-            // }
+            let measure = this._measureText(this.text, this.font, ctx);
+            if (this.renderType === 'fill') {
+                ctx.fillStyle = clr;
+                ctx.fillText(this.text, this.padding.w, measure.baseln + this.padding.h);
+            }
+            else {
+                ctx.strokeStyle = clr;
+                ctx.strokeText(this.text, this.padding.w, measure.baseln + this.padding.h);
+            }
         }
         finally {
             // restore the drawing context to the state it was given to us in

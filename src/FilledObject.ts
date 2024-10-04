@@ -28,6 +28,12 @@ export class FilledObject extends DrawnObjectBase {
     public override get w() {return super.w;}  
     public override set w(v : number) {
         //=== YOUR CODE HERE ===
+        if (!(v === this.w) ){
+
+            
+
+
+        }
     }
 
     public override get h() {return super.h;}

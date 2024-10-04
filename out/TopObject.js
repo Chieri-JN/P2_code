@@ -170,11 +170,24 @@ export class TopObject extends DrawnObjectBase {
     // damage instead of passing it up the tree (since there is no up  from here).
     damageArea(xv, yv, wv, hv) {
         //=== YOUR CODE HERE ===
-        this._damageRectX = xv;
-        this._damageRectY = yv;
-        this._damageRectW = wv;
-        this._damageRectH = hv;
-        this._damaged = true;
+        if (!(this._damaged === true)) {
+            this._damageRectX = xv;
+            this._damageRectY = yv;
+            this._damageRectW = wv;
+            this._damageRectH = hv;
+            this._damaged = true;
+        }
+        else {
+            // id you are already damagemed and are getting new min, x is the min or this.DamX and xv
+            // do max for h and w 
+            // if Math.min
+            // this._damageRectX = Math.min(this._damageRectX, xv);
+            // this._damageRectY = Math.min(this._damageRectY, yv);
+            this._damageRectX = Math.min(this.x, xv);
+            this._damageRectY = Math.min(this.y, yv);
+            this._damageRectW = Math.max(this.w, wv);
+            this._damageRectW = Math.max(this.h, hv);
+        }
         // console.log("SEND EHLP");
     }
     //. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  

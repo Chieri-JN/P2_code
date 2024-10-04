@@ -24,6 +24,8 @@ export class FilledObject extends DrawnObjectBase {
     get w() { return super.w; }
     set w(v) {
         //=== YOUR CODE HERE ===
+        if (!(v === this.w)) {
+        }
     }
     get h() { return super.h; }
     set h(v) {
