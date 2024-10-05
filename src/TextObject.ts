@@ -178,7 +178,7 @@ export class TextObject extends DrawnObjectBase {
             else
             {
                 ctx.strokeStyle = clr;
-                // console.log("TEXT",this.text, "Padding",this._padding.w, this._padding.h);
+                console.log("TEXT",this.text, "Padding",this._padding.w, this._padding.h);
                 ctx.strokeText(this.text, this.padding.w, measure.baseln + this.padding.h);
             }
            

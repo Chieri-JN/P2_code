@@ -93,11 +93,11 @@ export class TextObject extends DrawnObjectBase {
             // this._padding = { w: 20, h: 0 };
             ctx.font = this._font;
             let measure = this._measureText(this.text, ctx.font, ctx);
-            console.log("Size", this.w, this.h);
-            console.log("Text:", measure, "SIZE:", this.w, this.h);
+            // console.log("Size",this.w, this.h);             
+            // console.log("Text:", measure,"SIZE:", this.w, this.h);
             if (this.renderType === 'fill') {
                 ctx.fillStyle = clr;
-                console.log("TEXT", this.text, "Padding", this._padding.w, this._padding.h);
+                // console.log("TEXT",this.text, "Padding",this._padding.w, this._padding.h);
                 ctx.fillText(this.text, this.padding.w, measure.baseln + this.padding.h);
             }
             else {
