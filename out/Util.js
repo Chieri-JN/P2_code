@@ -2,8 +2,4 @@
 // Utility types and function that are used across modules
 //===================================================================
 export {};
-//-------------------------------------------------------------------
-// Utility functions
-//-------------------------------------------------------------------
-// none currently...
 //# sourceMappingURL=Util.js.map

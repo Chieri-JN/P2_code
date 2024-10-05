@@ -87,6 +87,13 @@ export class IconObject extends DrawnObjectBase {
     public get resizesImage() {return this._resizesImage;}
     public set resizesImage(v : boolean) {
         //=== YOUR CODE HERE ===
+       
+        if (! (v === this._resizesImage) && this._resizesImage){
+            // if true we draw image at currsize
+            this._resizesImage = v; 
+            this._resize();
+        }
+
     }
 
     //-------------------------------------------------------------------
@@ -96,6 +103,11 @@ export class IconObject extends DrawnObjectBase {
     // If our size is determined by the image, resize us to match (otherwise do nothing).
     protected _resize() {
         //=== YOUR CODE HERE ===
+        if (!this._resizesImage && this.image && this.image.canvasImage){
+            this.w = this.image.canvasImage.width
+            this.w = this.image.canvasImage.width
+        }
+
     }
 
     //. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -125,8 +137,13 @@ export class IconObject extends DrawnObjectBase {
 
         if (this.resizesImage) {
             //=== YOUR CODE HERE ===
+            ctx.drawImage(this.image.canvasImage, 0, 0, this.w, this.h )
+
         } else {
-            //=== YOUR CODE HERE ===
+            //=== YOUR CODE HERE ===2
+            this.w = this.image.canvasImage.width; 
+            this.h = this.image.canvasImage.height;
+            ctx.drawImage(this.image.canvasImage, 0, 0, this.w, this.h )
         }
     }
 

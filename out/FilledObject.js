@@ -25,11 +25,19 @@ export class FilledObject extends DrawnObjectBase {
     set w(v) {
         //=== YOUR CODE HERE ===
         if (!(v === this.w)) {
+            this._w = v;
+            this.wConfig = SizeConfig.fixed(v);
+            this.damageArea(0, 0, this.x, this.y);
         }
     }
     get h() { return super.h; }
     set h(v) {
         //=== YOUR CODE HERE ===
+        if (!(v === this._h)) {
+            this._h = v;
+            this.hConfig = SizeConfig.fixed(v);
+            this.damageArea(0, 0, this.x, this.y);
+        }
     }
     //. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
     // Override configuration setters to enforce fixed size
@@ -54,6 +62,9 @@ export class FilledObject extends DrawnObjectBase {
             ctx.fillStyle = this.color.toString();
         }
         //=== YOUR CODE HERE ===
+        ctx.clearRect(0, 0, this.w, this.h);
+        ctx.fillRect(0, 0, this.w, this.h);
+        // ctx.fill();
     }
     //. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
     // Produce a human readable "tag" string for this object -- a short string which 

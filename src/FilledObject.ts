@@ -29,18 +29,22 @@ export class FilledObject extends DrawnObjectBase {
     public override set w(v : number) {
         //=== YOUR CODE HERE ===
         if (!(v === this.w) ){
-
-            
-
-
+            this._w = v;
+            this.wConfig = SizeConfig.fixed(v)
+            this.damageArea(0,0, this.x, this.y)
         }
     }
 
     public override get h() {return super.h;}
     public override set h(v : number) {
         //=== YOUR CODE HERE ===
+        if (!(v === this._h) ){
+            this._h = v;
+            this.hConfig = SizeConfig.fixed(v)
+            this.damageArea(0,0, this.x, this.y)
+        }
     }
-
+        
 
     //. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
@@ -79,6 +83,10 @@ export class FilledObject extends DrawnObjectBase {
         }
         
         //=== YOUR CODE HERE ===
+        ctx.clearRect(0,0,this.w,this.h);
+        ctx.fillRect(0,0,this.w,this.h);
+        // ctx.fill();
+
     }
 
     

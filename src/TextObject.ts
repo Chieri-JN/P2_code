@@ -12,7 +12,7 @@ export class TextObject extends DrawnObjectBase {
         y          : number, 
         text       : string = "", 
         font       : string = TextObject.DEFAULT_FONT,
-        padding    : SizeLiteral | number = 0,
+        padding    : SizeLiteral | number = 4,
         color      : string | number = 'black',
         renderType : RenderOp = 'fill') 
     {
@@ -24,6 +24,7 @@ export class TextObject extends DrawnObjectBase {
             this._color = color;
             this._renderType = renderType;
             
+
             this._recalcSize();
     }
 
@@ -36,7 +37,11 @@ export class TextObject extends DrawnObjectBase {
     public get text() {return this._text;}
     public set text(v : string) {
         //=== YOUR CODE HERE ===
-        this._text = v;
+        if (!(v === this._text)) {
+            this._text = v;
+            this._recalcSize();
+
+        }
     }
 
     //. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -72,7 +77,8 @@ export class TextObject extends DrawnObjectBase {
         
         if (!(v === this._font)){
             this._font = v;
-            // this,
+            this.damageAll()
+
         }
     }  
 
@@ -86,12 +92,16 @@ export class TextObject extends DrawnObjectBase {
     protected _padding: SizeLiteral;
     public get padding() : SizeLiteral {return this._padding;}
     public set padding(v : SizeLiteral | number) {
-        if (typeof v === 'number') v = {w:v, h:v};
+        // console.log("Text padding before:", this._padding);
+        if (typeof v === 'number') {v = {w:v, h:v};}
         if (! (v === this._padding))
         {
-            this._padding.w = v.w;
-            this._padding.h = v.h;
+            this._padding = {w: v.w, h : v.h};
+            this._recalcSize();
+            // console.log("Updated padding:", this._padding); // notihing happenings...
         }
+        // console.log("Text padding after:", this._padding);
+
 
     }
     
@@ -122,11 +132,14 @@ export class TextObject extends DrawnObjectBase {
         //=== YOUR CODE HERE ===
         let size = this._measureText(this.text, this.font, ctx);        
         this.size  = {w : size.w, h : size.h}
+        this._w = size.w; // Update the width
+        this._h = size.h; // Update the height
+
 
         
         // // set the size configuration to be fixed at that size
-        this.wConfig = SizeConfig.fixed(this.w);
-        this.hConfig = SizeConfig.fixed(this.h);
+        this.wConfig = SizeConfig.fixed(this._w);
+        this.hConfig = SizeConfig.fixed(this._h);
     }
     
     //. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -150,19 +163,24 @@ export class TextObject extends DrawnObjectBase {
             }
             
             //=== YOUR CODE HERE ===
+            // this._padding = { w: 20, h: 0 };
 
             let measure = this._measureText(this.text, this.font, ctx);
+            console.log("Text measurements:", measure, this._padding.w);
+            console.log("Padding",this._padding.w, this._padding.h); 
 
             if (this.renderType === 'fill' )
             { 
                 ctx.fillStyle = clr;
-                ctx.fillText(this.text, this.padding.w, measure.baseln + this.padding.h);
+                // console.log("Padding",this._padding.w, this._padding.h);
+                ctx.fillText(this.text, this._padding.w, measure.baseln + this._padding.h);
             
             }
             else
             {
                 ctx.strokeStyle = clr;
-                ctx.strokeText(this.text, this.padding.w, measure.baseln + this.padding.h);
+                // console.log("Padding",this._padding.w, this._padding.h);
+                ctx.strokeText(this.text, this._padding.w, measure.baseln + this._padding.h);
             }
            
 
