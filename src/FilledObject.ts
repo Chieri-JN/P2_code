@@ -28,20 +28,23 @@ export class FilledObject extends DrawnObjectBase {
     public override get w() {return super.w;}  
     public override set w(v : number) {
         //=== YOUR CODE HERE ===
-        if (!(v === this.w) ){
+        if (!(v === super.w) ){
+            this.wConfig = SizeConfig.fixed(v);
             this._w = v;
-            this.wConfig = SizeConfig.fixed(v)
-            this.damageArea(0,0, this.x, this.y)
+            // this.damageArea(0,0, this.x, this.y);
+            this.damageAll()
         }
     }
 
     public override get h() {return super.h;}
     public override set h(v : number) {
         //=== YOUR CODE HERE ===
-        if (!(v === this._h) ){
+        if (!(v === super.w) ){
+            
+            this.hConfig = SizeConfig.fixed(v);
             this._h = v;
-            this.hConfig = SizeConfig.fixed(v)
-            this.damageArea(0,0, this.x, this.y)
+            // this.damageArea(0,0, this.x, this.y);
+            this.damageAll();
         }
     }
         
