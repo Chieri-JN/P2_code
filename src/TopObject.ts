@@ -184,6 +184,7 @@ export class TopObject extends DrawnObjectBase {
                 // do the actual drawing from here down the tree
                 //=== YOUR CODE HERE ===
                 this.draw(this.canvasContext);
+                this._damaged = false;
                 
 
             } catch(err) {
