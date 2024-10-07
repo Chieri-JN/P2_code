@@ -109,7 +109,7 @@ export class DrawnObjectBase {
     get w() { return this._w; }
     set w(v) {
         //=== YOUR CODE HERE ===
-        v = SizeConfig.withinConfig(v, this.wConfig);
+        v = SizeConfig.withinConfig(v, this._wConfig);
         if (!(this._w === v)) {
             this._w = v;
             this.damageAll();
@@ -141,7 +141,7 @@ export class DrawnObjectBase {
     get h() { return this._h; }
     set h(v) {
         //=== YOUR CODE HERE ===
-        v = SizeConfig.withinConfig(v, this.hConfig);
+        v = SizeConfig.withinConfig(v, this._hConfig);
         if (!(this._h === v)) {
             this._h = v;
             this.damageAll();
@@ -426,8 +426,9 @@ export class DrawnObjectBase {
         // save the state of the context object on its internal stack
         ctx.save();
         //=== YOUR CODE HERE ===
-        let child = this.children[childIndx];
+        let child = this._children[childIndx];
         // translate the child
+        //ctx.resetTransform();
         ctx.translate(child.x, child.y);
         // clip 
         this.applyClip(ctx, 0, 0, child.w, child.h);

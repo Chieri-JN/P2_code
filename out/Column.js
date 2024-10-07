@@ -78,6 +78,28 @@ export class Column extends Group {
     // Our height is set to the height determined by stacking our children vertically.
     _doLocalSizing() {
         //=== YOUR CODE HERE ===
+        // storing max of children width configs
+        let maxSumH = 0;
+        let minSumH = 0;
+        let natSumH = 0;
+        //storing sum of chilren height configs
+        let maxW = 0;
+        let minW = 0;
+        let natW = 0;
+        for (let i = 0; i < this._children.length; i++) {
+            maxSumH += this._children[i].hConfig.max;
+            minSumH += this._children[i].hConfig.min;
+            natSumH += this._children[i].hConfig.nat;
+            maxW = Math.max(maxW, this._children[i].wConfig.max);
+            minW = Math.max(minW, this._children[i].wConfig.min);
+            natW = Math.max(natW, this._children[i].wConfig.nat);
+        }
+        this.hConfig.max = maxSumH;
+        this.hConfig.min = minSumH;
+        this.hConfig.nat = natSumH;
+        this.wConfig.max = maxW;
+        this.wConfig.min = minW;
+        this.wConfig.nat = natW;
     }
     //. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
     // This method adjusts the height of the children to do vertical springs and struts 
@@ -135,6 +157,20 @@ export class Column extends Group {
         let availCompr = 0;
         let numSprings = 0;
         //=== YOUR CODE HERE ===
+        for (let i = 0; i < this._children.length; i++) {
+            // if non spring child
+            if (!(this._children[i] instanceof Spring)) {
+                //nat-min
+                natSum += this._children[i].hConfig.nat;
+                // sum of natural sizes of the non-spring children
+                availCompr += this._children[i].hConfig.nat - this._children[i].hConfig.min;
+            }
+            else {
+                // count springs
+                numSprings++;
+            }
+        }
+        return [natSum, availCompr, numSprings];
         return [natSum, availCompr, numSprings];
     }
     //. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -144,6 +180,16 @@ export class Column extends Group {
     // the space at the bottom of the column as a fallback strategy).
     _expandChildSprings(excess, numSprings) {
         //=== YOUR CODE HERE ===
+        if (numSprings === 0)
+            return; // do nothing
+        let expanSpace = excess / numSprings;
+        // iterate through list of children 
+        for (let child of this._children) {
+            // applying expansion to Spring children
+            if (child instanceof Spring) {
+                child.h = expanSpace;
+            }
+        }
     }
     //. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
     // Contract our child objects to make up the given amount of shortfall.  Springs
@@ -198,6 +244,16 @@ export class Column extends Group {
         }
         // apply our justification setting for the horizontal
         //=== YOUR CODE HERE ===
+        for (let child of this.children) {
+            let offset = 0;
+            if (this._wJustification === 'center') {
+                offset = (this.w - child.w) / 2;
+            }
+            else if (this._wJustification === 'right') {
+                offset = this.w - child.w;
+            }
+            child.x = offset;
+        }
     }
 }
 //===================================================================

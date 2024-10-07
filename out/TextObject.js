@@ -41,14 +41,14 @@ export class TextObject extends DrawnObjectBase {
     get padding() { return this._padding; }
     set padding(v) {
         // this doesnt seem to be called at all...
-        console.log("Text padding before:", this._padding);
+        // console.log("Text padding before:", this._padding);
         if (typeof v === 'number') {
             v = { w: v, h: v };
         }
         if (!(v === this._padding)) {
             this._padding = { w: v.w, h: v.h };
             this._recalcSize();
-            console.log("Updated padding:", this._padding); // notihing happenings...
+            // console.log("Updated padding:", this._padding); // notihing happenings...
         }
         // console.log("Text padding after:", this._padding);
     }
@@ -102,7 +102,7 @@ export class TextObject extends DrawnObjectBase {
             }
             else {
                 ctx.strokeStyle = clr;
-                console.log("TEXT", this.text, "Padding", this._padding.w, this._padding.h);
+                // console.log("TEXT",this.text, "Padding",this._padding.w, this._padding.h);
                 ctx.strokeText(this.text, this.padding.w, measure.baseln + this.padding.h);
             }
         }

@@ -93,6 +93,36 @@ export class Row extends Group {
     protected override _doLocalSizing() : void {
         //=== YOUR CODE HERE ===max};
         
+        // storing sums of children width configs
+        let maxSumW = 0;
+        let minSumW = 0;
+        let natSumW = 0;
+
+        //storing max of chilren height configs
+        let maxH = 0;
+        let minH = 0;
+        let natH = 0;
+        
+        for (let i = 0; i < this._children.length; i++){
+
+            maxSumW += this._children[i].wConfig.max;
+            minSumW += this._children[i].wConfig.min;
+            natSumW += this._children[i].wConfig.nat;
+
+            maxH = Math.max(maxH, this._children[i].hConfig.max)
+            minH = Math.max(minH, this._children[i].hConfig.min)
+            natH = Math.max(natH, this._children[i].hConfig.nat)
+            
+        }
+
+        this.wConfig.max = maxSumW;
+        this.wConfig.min = minSumW;
+        this.wConfig.nat = natSumW
+
+        this.hConfig.max = maxH;
+        this.hConfig.min = minH;
+        this.hConfig.nat = natH;
+    
     }
 
     //. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -152,11 +182,25 @@ export class Row extends Group {
         // - sum up the natural size of all our non-spring children
         // - how much non-spring objects can compress (nat-min) total
         // - how many springs we have
+        // _measureChildren
         let natSum = 0;  
         let availCompr = 0; 
         let numSprings = 0; 
-
         //=== YOUR CODE HERE ===
+
+        // iterate through list of chilren
+        for (let i = 0; i < this._children.length; i++){
+            // if non spring child
+            if(!(this._children[i] instanceof Spring)){
+                //nat-min
+                natSum += this._children[i].wConfig.nat;
+                // sum of natural sizes of the non-spring children
+                availCompr += this._children[i].wConfig.nat - this._children[i].wConfig.min;
+            } else {
+                // count springs
+                numSprings ++;
+            }
+        }
 
         return [natSum, availCompr, numSprings];
     }
@@ -169,8 +213,17 @@ export class Row extends Group {
     // the space at the right of the row as a fallback strategy).
     protected _expandChildSprings(excess : number, numSprings : number) : void {
         //=== YOUR CODE HERE ===
+        if (numSprings === 0) return; // do nothing
 
-        // should not be += just =
+        let expanSpace = excess / numSprings;
+        // iterate through list of children 
+        for (let child of this._children){
+            // applying expansion to Spring children
+            if (child instanceof Spring){
+                child.w =  expanSpace;
+            }
+        }
+
     }
 
     //. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -189,8 +242,12 @@ export class Row extends Group {
         // compressabilty across all the children. we calculate the fraction for 
         // each child, then subtract that fraction of the total shortfall 
         // from the natural height of that child, to get the assigned height.
+
+        let compSpace = availCompr / this.children.length;
+
         for (let child of this.children) {
             //=== YOUR CODE HERE ===
+            
         }
 }
 
@@ -235,6 +292,20 @@ export class Row extends Group {
         // apply our justification setting for the vertical
 
         //=== YOUR CODE HERE ===
+        for (let child of this._children){
+            let offset = 0;
+            if (this._hJustification === 'center'){
+                // set offset to be middle of parent height
+                // we subtract child hight so that we draw within bounds of parent
+                offset = (this.h - child.h) / 2; 
+            } else if (this._hJustification === 'bottom'){
+                // set offset to justify to bottom of parent height
+                // we subtract child height so that we draw within bounds of parent
+                offset = this.h - child.h
+            }
+            child.y = offset;
+        }
+
     }
 
     //. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .

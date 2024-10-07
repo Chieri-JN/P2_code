@@ -78,6 +78,28 @@ export class Row extends Group {
     // Our width is set to the width determined by stacking our children horizontally.
     _doLocalSizing() {
         //=== YOUR CODE HERE ===max};
+        // storing sums of children width configs
+        let maxSumW = 0;
+        let minSumW = 0;
+        let natSumW = 0;
+        //storing max of chilren height configs
+        let maxH = 0;
+        let minH = 0;
+        let natH = 0;
+        for (let i = 0; i < this._children.length; i++) {
+            maxSumW += this._children[i].wConfig.max;
+            minSumW += this._children[i].wConfig.min;
+            natSumW += this._children[i].wConfig.nat;
+            maxH = Math.max(maxH, this._children[i].hConfig.max);
+            minH = Math.max(minH, this._children[i].hConfig.min);
+            natH = Math.max(natH, this._children[i].hConfig.nat);
+        }
+        this.wConfig.max = maxSumW;
+        this.wConfig.min = minSumW;
+        this.wConfig.nat = natSumW;
+        this.hConfig.max = maxH;
+        this.hConfig.min = minH;
+        this.hConfig.nat = natH;
     }
     //. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
     // This method adjusts the width of the children to do horizontal springs and struts 
@@ -131,10 +153,25 @@ export class Row extends Group {
         // - sum up the natural size of all our non-spring children
         // - how much non-spring objects can compress (nat-min) total
         // - how many springs we have
+        // _measureChildren
         let natSum = 0;
         let availCompr = 0;
         let numSprings = 0;
         //=== YOUR CODE HERE ===
+        // iterate through list of chilren
+        for (let i = 0; i < this._children.length; i++) {
+            // if non spring child
+            if (!(this._children[i] instanceof Spring)) {
+                //nat-min
+                natSum += this._children[i].wConfig.nat;
+                // sum of natural sizes of the non-spring children
+                availCompr += this._children[i].wConfig.nat - this._children[i].wConfig.min;
+            }
+            else {
+                // count springs
+                numSprings++;
+            }
+        }
         return [natSum, availCompr, numSprings];
     }
     //. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -144,7 +181,16 @@ export class Row extends Group {
     // the space at the right of the row as a fallback strategy).
     _expandChildSprings(excess, numSprings) {
         //=== YOUR CODE HERE ===
-        // should not be += just =
+        if (numSprings === 0)
+            return; // do nothing
+        let expanSpace = excess / numSprings;
+        // iterate through list of children 
+        for (let child of this._children) {
+            // applying expansion to Spring children
+            if (child instanceof Spring) {
+                child.w = expanSpace;
+            }
+        }
     }
     //. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
     // Contract our child objects to make up the given amount of shortfall.  Springs
@@ -159,6 +205,7 @@ export class Row extends Group {
         // compressabilty across all the children. we calculate the fraction for 
         // each child, then subtract that fraction of the total shortfall 
         // from the natural height of that child, to get the assigned height.
+        let compSpace = availCompr / this.children.length;
         for (let child of this.children) {
             //=== YOUR CODE HERE ===
         }
@@ -199,6 +246,17 @@ export class Row extends Group {
         }
         // apply our justification setting for the vertical
         //=== YOUR CODE HERE ===
+        for (let child of this._children) {
+            let offset = 0;
+            if (this._hJustification === 'center') {
+                // set offset to be middle of 
+                offset = (this.h - child.h) / 2;
+            }
+            else if (this._hJustification === 'bottom') {
+                offset = this.h - child.h;
+            }
+            child.y = offset;
+        }
     }
 }
 //===================================================================

@@ -29,11 +29,17 @@ export class Strut extends DrawnObjectBase {
     public override get w() {return super.w;}  
     public override set w(v : number) {
         //=== YOUR CODE HERE ===
+        this._w = v;
+        this._wConfig = SizeConfig.fixed(v);
+        this.damageArea(this.x, this.y, this.w, this.h)
     }
 
     public override get h() {return super.h;}
     public override set h(v : number) {
         //=== YOUR CODE HERE ===
+        this._h = v;
+        this._hConfig = SizeConfig.fixed(v);
+        this.damageArea(this.x, this.y, this.w, this.h)
     }
 
 

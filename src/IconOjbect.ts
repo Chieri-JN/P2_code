@@ -117,7 +117,11 @@ export class IconObject extends DrawnObjectBase {
         // we always damage because even the same image object might change internally  
 
         // damage the old position/size
-        this.damageAll();
+        // this seems to be a source of conflict where damage is declared while
+        // drawing, since the following message is printed to the console
+        // 'Improper damage declaration during redraw detected in TopObject.drawAll()'
+        // but only when a force reload is performed
+        this.damageAll(); 
         this.image = img;
 
         // do special notification to support possible a extra redraw for 

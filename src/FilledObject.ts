@@ -28,27 +28,28 @@ export class FilledObject extends DrawnObjectBase {
     public override get w() {return super.w;}  
     public override set w(v : number) {
         //=== YOUR CODE HERE ===
-        if (!(v === super.w) ){
-            this.wConfig = SizeConfig.fixed(v);
+        if (!(v === this.w) ){
             this._w = v;
-            // this.damageArea(0,0, this.x, this.y);
-            this.damageAll()
+            this.wConfig = SizeConfig.fixed(v);
+            
+            this.damageArea(0,0, this.x, this.y); 
+            console.log("W overridden!")
+            // this.damageAll()
         }
     }
 
     public override get h() {return super.h;}
     public override set h(v : number) {
         //=== YOUR CODE HERE ===
-        if (!(v === super.w) ){
-            
-            this.hConfig = SizeConfig.fixed(v);
+        if (!(v === this.h) ){
             this._h = v;
-            // this.damageArea(0,0, this.x, this.y);
-            this.damageAll();
+            this.hConfig = SizeConfig.fixed(v);
+            
+            this.damageArea(0,0, this.x, this.y);
+            console.log("H overridden!")
+            // this.damageAll();
         }
     }
-        
-
     //. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
     // Override configuration setters to enforce fixed size
@@ -86,6 +87,7 @@ export class FilledObject extends DrawnObjectBase {
         }
         
         //=== YOUR CODE HERE ===
+
         ctx.clearRect(0,0,this.w,this.h);
         ctx.fillRect(0,0,this.w,this.h);
         // ctx.fill();

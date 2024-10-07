@@ -24,21 +24,23 @@ export class FilledObject extends DrawnObjectBase {
     get w() { return super.w; }
     set w(v) {
         //=== YOUR CODE HERE ===
-        if (!(v === super.w)) {
-            this.wConfig = SizeConfig.fixed(v);
+        if (!(v === this.w)) {
             this._w = v;
-            // this.damageArea(0,0, this.x, this.y);
-            this.damageAll();
+            this.wConfig = SizeConfig.fixed(v);
+            this.damageArea(0, 0, this.x, this.y);
+            console.log("W overridden!");
+            // this.damageAll()
         }
     }
     get h() { return super.h; }
     set h(v) {
         //=== YOUR CODE HERE ===
-        if (!(v === super.w)) {
-            this.hConfig = SizeConfig.fixed(v);
+        if (!(v === this.h)) {
             this._h = v;
-            // this.damageArea(0,0, this.x, this.y);
-            this.damageAll();
+            this.hConfig = SizeConfig.fixed(v);
+            this.damageArea(0, 0, this.x, this.y);
+            console.log("H overridden!");
+            // this.damageAll();
         }
     }
     //. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .

@@ -154,7 +154,7 @@ export class DrawnObjectBase {
     public get w() : number {return this._w;}
     public set w(v : number) {
             //=== YOUR CODE HERE ===
-            v = SizeConfig.withinConfig(v, this.wConfig)
+            v = SizeConfig.withinConfig(v, this._wConfig)
             if (!(this._w === v))
             {
                 this._w = v;
@@ -200,7 +200,7 @@ export class DrawnObjectBase {
     public get h() : number {return this._h;}
     public set h(v : number) {
         //=== YOUR CODE HERE ===
-        v = SizeConfig.withinConfig(v, this.hConfig)
+        v = SizeConfig.withinConfig(v, this._hConfig)
         
         if (!(this._h === v))
             {
@@ -561,9 +561,10 @@ export class DrawnObjectBase {
         ctx.save();
 
         //=== YOUR CODE HERE ===
-        let child = this.children[childIndx]
+        let child = this._children[childIndx]
        
         // translate the child
+        //ctx.resetTransform();
         ctx.translate(child.x, child.y)
 
         // clip 

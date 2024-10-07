@@ -29,4 +29,4 @@ export type HJust = 'top' | 'center' | 'bottom';
 //-------------------------------------------------------------------
 
 // none currently...
-export type Cheese = {holes: boolean, kind: string, weight: number};
+// export type Cheese = {holes: boolean, kind: string, weight: number};
