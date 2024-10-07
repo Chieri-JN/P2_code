@@ -150,8 +150,6 @@ export class DrawnObjectBase {
     get hConfig() { return this._hConfig; }
     set hConfig(v) {
         //=== YOUR CODE HERE ===
-        // if ( ! (v === this._hConfig)){
-        // const newW = SizeConfig.withinConfig(v, this.wConfig);
         if (!(SizeConfig.eq(this._hConfig, v))) {
             this._hConfig = v;
             this.damageAll();
@@ -428,12 +426,9 @@ export class DrawnObjectBase {
         //=== YOUR CODE HERE ===
         let child = this._children[childIndx];
         // translate the child
-        //ctx.resetTransform();
         ctx.translate(child.x, child.y);
         // clip 
         this.applyClip(ctx, 0, 0, child.w, child.h);
-        // bewoop
-        console.log(child);
     }
     //. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
     // Internal method to restore the given drawing context after drawing the 
@@ -548,7 +543,7 @@ export class DrawnObjectBase {
     damageArea(xv, yv, wv, hv) {
         //=== YOUR CODE HERE ===
         // Pass up damage through tree i.e give damage to parent
-        if (this.parent) { // Safety Check!
+        if (this.parent) { // Safety Check! 
             this.parent._damageFromChild(this, xv, yv, wv, hv);
         }
     }
@@ -568,7 +563,6 @@ export class DrawnObjectBase {
     // limited to our bounds by clipping.
     _damageFromChild(child, xInChildCoords, yInChildCoords, wv, hv) {
         //=== YOUR CODE HERE ===
-        // Convert child coords to parent coord system,
         // want to add child position relative to parent to coords
         // from child perspective
         let parentx = child.x + xInChildCoords;
@@ -580,7 +574,6 @@ export class DrawnObjectBase {
         let wDam = (wv < (this.w - xDam)) ? wv : this.w - xDam;
         let hDam = (hv < (this.h - yDam)) ? hv : this.h - yDam;
         if (wDam > 0 && hDam > 0) {
-            // pass it up
             this.damageArea(xDam, yDam, wDam, hDam);
         }
     }

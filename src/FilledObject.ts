@@ -31,10 +31,7 @@ export class FilledObject extends DrawnObjectBase {
         if (!(v === this.w) ){
             this._w = v;
             this.wConfig = SizeConfig.fixed(v);
-            
             this.damageArea(0,0, this.x, this.y); 
-            console.log("W overridden!")
-            // this.damageAll()
         }
     }
 
@@ -44,10 +41,8 @@ export class FilledObject extends DrawnObjectBase {
         if (!(v === this.h) ){
             this._h = v;
             this.hConfig = SizeConfig.fixed(v);
-            
             this.damageArea(0,0, this.x, this.y);
-            console.log("H overridden!")
-            // this.damageAll();
+
         }
     }
     //. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -90,7 +85,6 @@ export class FilledObject extends DrawnObjectBase {
 
         ctx.clearRect(0,0,this.w,this.h);
         ctx.fillRect(0,0,this.w,this.h);
-        // ctx.fill();
 
     }
 

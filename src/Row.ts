@@ -243,11 +243,15 @@ export class Row extends Group {
         // each child, then subtract that fraction of the total shortfall 
         // from the natural height of that child, to get the assigned height.
 
-        let compSpace = availCompr / this.children.length;
-
         for (let child of this.children) {
             //=== YOUR CODE HERE ===
-            
+            // the amount child can bec compressed
+            let childCompress = child.hConfig.nat - child.hConfig.min;;
+            if (childCompress > 0){
+                // fraction of child compression from total compressions
+                let compFract = childCompress / availCompr;
+                child.h -= shortfall * compFract;
+            }
         }
 }
 

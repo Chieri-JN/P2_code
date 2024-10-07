@@ -206,6 +206,14 @@ export class Column extends Group {
         // from the natural height of that child, to get the assigned height.
         for (let child of this.children) {
             //=== YOUR CODE HERE ===
+            // the amount child can bec compressed
+            let childCompress = child.hConfig.nat - child.hConfig.min;
+            ;
+            if (childCompress > 0) {
+                // fraction of child compression from total compressions
+                let compFract = childCompress / availCompr;
+                child.h -= shortfall * compFract;
+            }
         }
     }
     //. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -247,11 +255,15 @@ export class Column extends Group {
         for (let child of this.children) {
             let offset = 0;
             if (this._wJustification === 'center') {
+                // set offset to justify to middle of parent width
+                // we subtract child hight so that we draw within bounds of parent
                 offset = (this.w - child.w) / 2;
             }
             else if (this._wJustification === 'right') {
+                // set offset to justify to right of parent width
                 offset = this.w - child.w;
             }
+            // set child x to be offset
             child.x = offset;
         }
     }

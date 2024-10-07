@@ -164,12 +164,7 @@ export class TopObject extends DrawnObjectBase {
                 
                 
                 // within our bounds clip to just the damaged region
-                //=== YOUR CODE HERE ===
-
-                // This is weird.
-                // this.applyClip(this.canvasContext, this._damageRectX, this._damageRectY, this._damageRectW, this._damageRectH);
-                
-                // Within our bounds, intersect with the damaged region
+                //=== YOUR CODE HERE ==            
                 if (this._damaged) {
                     const x = Math.max(this._x, this._damageRectX);
                     const y = Math.max(this._y, this._damageRectY);
@@ -222,7 +217,7 @@ export class TopObject extends DrawnObjectBase {
     // damage instead of passing it up the tree (since there is no up  from here).
     public override damageArea(xv: number, yv: number, wv: number, hv: number): void {
         //=== YOUR CODE HERE ===
-
+        // if no damage has occured
         if (!(this._damaged === true)){
             this._damageRectX = xv;
             this._damageRectY = yv;
@@ -232,12 +227,9 @@ export class TopObject extends DrawnObjectBase {
             this._damaged = true;
 
         }else{
-            // id you are already damagemed and are getting new min, x is the min or this.DamX and xv
-            // do max for h and w 
-            // if Math.min
-            // this._damageRectX = Math.min(this._damageRectX, xv);
-            // this._damageRectY = Math.min(this._damageRectY, yv);
-
+            // if we are already damaged we want to adjust (exapnd) damaged area
+            // give new region, 
+            // x,y vals should get smaller and w, h vals get bigger
             this._damageRectX = Math.min(this.x, xv);
             this._damageRectY = Math.min(this.y, yv);
             this._damageRectW = Math.max(this.w, wv);

@@ -28,8 +28,6 @@ export class FilledObject extends DrawnObjectBase {
             this._w = v;
             this.wConfig = SizeConfig.fixed(v);
             this.damageArea(0, 0, this.x, this.y);
-            console.log("W overridden!");
-            // this.damageAll()
         }
     }
     get h() { return super.h; }
@@ -39,8 +37,6 @@ export class FilledObject extends DrawnObjectBase {
             this._h = v;
             this.hConfig = SizeConfig.fixed(v);
             this.damageArea(0, 0, this.x, this.y);
-            console.log("H overridden!");
-            // this.damageAll();
         }
     }
     //. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -68,7 +64,6 @@ export class FilledObject extends DrawnObjectBase {
         //=== YOUR CODE HERE ===
         ctx.clearRect(0, 0, this.w, this.h);
         ctx.fillRect(0, 0, this.w, this.h);
-        // ctx.fill();
     }
     //. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
     // Produce a human readable "tag" string for this object -- a short string which 

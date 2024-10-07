@@ -35,22 +35,20 @@ export class TextObject extends DrawnObjectBase {
         //=== YOUR CODE HERE ===
         if (!(v === this._font)) {
             this._font = v;
-            // this.damageAll()
+            this.damageAll();
         }
     }
     get padding() { return this._padding; }
     set padding(v) {
-        // this doesnt seem to be called at all...
-        // console.log("Text padding before:", this._padding);
         if (typeof v === 'number') {
             v = { w: v, h: v };
         }
+        //=== YOUR CODE HERE ===
+        // adjust padding
         if (!(v === this._padding)) {
             this._padding = { w: v.w, h: v.h };
             this._recalcSize();
-            // console.log("Updated padding:", this._padding); // notihing happenings...
         }
-        // console.log("Text padding after:", this._padding);
     }
     get renderType() { return this._renderType; }
     set rederType(v) { this._renderType = v; }
@@ -62,8 +60,10 @@ export class TextObject extends DrawnObjectBase {
     // Recalculate the size of this object based on the size of the text
     _recalcSize(ctx) {
         //=== YOUR CODE HERE ===
+        //measure textAlign
         let size = this._measureText(this._text, this._font, ctx);
         this.size = { w: size.w, h: size.h };
+        // set width to size + padding
         this._w = size.w + 2 * this.padding.w;
         this._h = size.h + 2 * this.padding.h;
         this.damageArea(this.x, this.y, this.w, this.h);
@@ -90,19 +90,14 @@ export class TextObject extends DrawnObjectBase {
                 clr = this.color.toString();
             }
             //=== YOUR CODE HERE ===
-            // this._padding = { w: 20, h: 0 };
             ctx.font = this._font;
             let measure = this._measureText(this.text, ctx.font, ctx);
-            // console.log("Size",this.w, this.h);             
-            // console.log("Text:", measure,"SIZE:", this.w, this.h);
             if (this.renderType === 'fill') {
                 ctx.fillStyle = clr;
-                // console.log("TEXT",this.text, "Padding",this._padding.w, this._padding.h);
                 ctx.fillText(this.text, this.padding.w, measure.baseln + this.padding.h);
             }
             else {
                 ctx.strokeStyle = clr;
-                // console.log("TEXT",this.text, "Padding",this._padding.w, this._padding.h);
                 ctx.strokeText(this.text, this.padding.w, measure.baseln + this.padding.h);
             }
         }

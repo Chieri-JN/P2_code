@@ -205,9 +205,16 @@ export class Row extends Group {
         // compressabilty across all the children. we calculate the fraction for 
         // each child, then subtract that fraction of the total shortfall 
         // from the natural height of that child, to get the assigned height.
-        let compSpace = availCompr / this.children.length;
         for (let child of this.children) {
             //=== YOUR CODE HERE ===
+            // the amount child can bec compressed
+            let childCompress = child.hConfig.nat - child.hConfig.min;
+            ;
+            if (childCompress > 0) {
+                // fraction of child compression from total compressions
+                let compFract = childCompress / availCompr;
+                child.h -= shortfall * compFract;
+            }
         }
     }
     //. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -249,10 +256,13 @@ export class Row extends Group {
         for (let child of this._children) {
             let offset = 0;
             if (this._hJustification === 'center') {
-                // set offset to be middle of 
+                // set offset to be middle of parent height
+                // we subtract child hight so that we draw within bounds of parent
                 offset = (this.h - child.h) / 2;
             }
             else if (this._hJustification === 'bottom') {
+                // set offset to justify to bottom of parent height
+                // we subtract child height so that we draw within bounds of parent
                 offset = this.h - child.h;
             }
             child.y = offset;
